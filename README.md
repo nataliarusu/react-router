@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+        npm install react-router-dom
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+router package allows to handle url without fetching new html pages. We should add routing tool to our code, it will watch url changing and we should let the router know wich component should be loaded for each route(for each url).
+<hr>
+1. create new folder next to components folder "pages". In "pages" folder we will store components that will be loaded as pages when certain urls are visited. At the end the components will be the regular react components.
+2. in index.js we should wrap <App> with router. BrowserRouter is a component itself. BrowserRouter is a React Context. React Context is a way to manage state globally. It can be used together with the useState Hook to share state between deeply nested components more easily than with useState alone.
 
-## Available Scripts
+    
+        import { BrowserRouter } from 'react-router-dom';
+        
+        <BrowserRouter><App/></BrowserRouter> 
+    
 
-In the project directory, you can run:
+So now we initialize our router package, we make it aware about this App and watches our url<br>
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3  in App.js component we should define which components should be loaded for different paths. Route component of 'react-router-dom' job is to listen to different paths and wich components should be loaded for different paths
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+        import {Route, Routes} from 'react-router-dom';
 
-### `npm test`
+        <Routes>
+           <Route path="/" element={<AllMeetups />} />
+           <Route path="/new-meetups" element={<NewMeetups />}/>
+           <Route path="/favorites" element={ <Favorites />}/>     
+        </Routes>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Routes - A container for a nested tree of elements that renders the branch that best matches the current location.
 
-### `npm run build`
+Route - Declares an element that should be rendered at a certain URL path.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The path attribute is a path after domain. So if we visit localhost:3000/new-meetups it will display the component between Route component tag <code> NewMeetups</code>.
+The element is a Component that should be rendered in a specific path.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+when we visit localhost:3000/favorites the Favorites component will be displayed
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### NOTE error 
 
-### `npm run eject`
+The error ERR_OSSL_EVP_UNSUPPORTED has been mentioned in the release notes for Node.js 17.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+        opensslErrorStack: [ 'error:03000086:digital envelope routines::initialization error' ],
+        library: 'digital envelope routines',
+        reason: 'unsupported',
+        code: 'ERR_OSSL_EVP_UNSUPPORTED'
+#### Solution
+As a workaround solution you can fix this by using the legacy provider for openssl. So, you need to edit the package.json file under your application’s root directory and check for the following lines and replace them accordingly.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+        replace "start": "react-scripts start" by
+        "start": "react-scripts --openssl-legacy-provider start"
+        replace "build": "react-scripts build" by 
+        "build": "react-scripts --openssl-legacy-provider build"

@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 
+import AllMeetups from './pages/AllMeetups';
+import Favorites from './pages/Favorites';
+import NewMeetups from './pages/NewMeetup';
 function App() {
+  //the path after the domain will be the path
+  // localhost:3000/
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Routes>
+      
+        <Route path="/new-meetups" element={<NewMeetups />}/>
+        <Route path="/favorites" element={ <Favorites />}/>
+        <Route path="/" element={<AllMeetups />} />
+        <Route path="/hi" element={<h1>Hi</h1>} />     
+
+      </Routes>
     </div>
   );
 }
