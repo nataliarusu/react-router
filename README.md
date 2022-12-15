@@ -29,7 +29,7 @@ Routes - A container for a nested tree of elements that renders the branch that 
 Route - Declares an element that should be rendered at a certain URL path.
 
 The path attribute is a path after domain. So if we visit localhost:3000/new-meetups it will display the component between Route component tag <code> NewMeetups</code>.
-The element is a Component that should be rendered in a specific path.
+The element is a Component that should be rendered in a specific path. So this element associated with this path
 
 when we visit localhost:3000/favorites the Favorites component will be displayed
 
@@ -48,3 +48,22 @@ As a workaround solution you can fix this by using the legacy provider for opens
         "start": "react-scripts --openssl-legacy-provider start"
         replace "build": "react-scripts build" by 
         "build": "react-scripts --openssl-legacy-provider build"
+
+Link component is used instead of <code>a</code> tag for naviagtion because <code>a</code> will send a new request to the server, while Link is technically <code>a</code> but it won't send any requests. Link is another component of react-router-dom and we should import it. Link has <code>to</code> prop as <code>href</code> attribute for <code>a</code>. Internaly react-router-dom attaches click listener to Link component and it will prevent default sending request, change url bar but will load appropriate component/changes content but don't refresh the page.
+
+        <div>
+         <nav>
+           <ul>
+              <li><Link to='/'>Home</Link></li>
+              <li><Link to='/all-meetups'>All Meetups</Link></li>
+              <li><Link to='/favorites'>Favorites</Link></li>
+              <li><Link to='/new-meetups'>New Meetups</Link></li>
+           </ul>
+         </nav>
+         <Routes>
+           <Route path="/new-meetups" element={<NewMeetups />}/>
+           <Route path="/favorites" element={ <Favorites />}/>
+           <Route path="/all-meetups" element={<AllMeetups />} />
+           <Route path="/hi" element={<h1>Hi</h1>} />     
+         </Routes>
+        </div>
