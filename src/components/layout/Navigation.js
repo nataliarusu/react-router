@@ -17,6 +17,9 @@ function Navigation() {
         <li>
           <Link to="/new-meetups">New Meetups</Link>
         </li>
+        <li>
+          <Link to="/book-list">Books</Link>
+        </li>
       </ul>
     </nav>
   );
