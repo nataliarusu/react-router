@@ -104,3 +104,33 @@ Pretty much always when we have a dynamic route like this we want to access the 
         }
 
         export default Book;
+
+The useParams hook takes no parameters and will return an object with keys that match the dynamic parameters in your route. In our case our dynamic parameter is :id so the useParams hook will return an object that has a key of id and the value of that key will be the actual id in our URL. For example, if our URL was /books/3 our page would render Book 3.
+
+### Routing Priority
+
+        <Route path="/books/:id" element={<Book />} />
+        <Route path="/books/new" element={<NewBook />} />
+
+version 6 of React Router changed so now React Router will use an algorithm to determine which route is most likely the the one you want. In our case we obviously want to render the /books/new route so React Router will select that route for us. The actual way this algorithm works is very similar to CSS specificity since it will try to determine which route that matches our URL is the most specific (has the least amount of dynamic elements) and it will select that route.
+
+        <Route path="*" element={<NotFound />} />
+
+A * will match anything at all which makes it perfect for things like a 404 page. A route that contains a * will also be less specific than anything else so it never accidentally match a * route when another route would have also matched.
+
+
+### Nested Routes
+
+        <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/books">
+                        <Route index element={<BookList />} />
+                        <Route path=":id" element={<Book />} />
+                        <Route path="new" element={<NewBook />} />
+                </Route>
+                <Route path="*" element={<NotFound />} />
+        </Routes>
+
+All you need to do is make a parent Route that has the path prop set to the shared path for all your child Route components. Then inside the parent Route you can put all the child Route components. The only difference is that the path prop of the child Route components no longer includes the shared /books route. Also, the route for /books is replaced with a Route component that has no path prop, but instead has an index prop. All this is saying is that the path of the index Route is the same as the parent Route.
+
+// https://blog.webdevsimplified.com/2022-07/react-router/
